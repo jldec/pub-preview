@@ -1,0 +1,16 @@
+{
+  "name": "pub-preview",
+  "version": "1.0.0",
+  "description": "Browserify script for client-side navigation and pub-pkg-editor preview rendering (uses jQuery)",
+  "main": "browser-script.js",
+  "dependencies": {
+    "page": "^1.6.3"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jldec/pub-preview.git"
+  },
+  "author": "jurgen leschner",
+  "license": "MIT"
+}
