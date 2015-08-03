@@ -46,9 +46,9 @@ module.exports = function(generator, $) {
   }
 
   // navigate or reload by regenerating just the page or the whole layout
-  function nav(path, query, hash) {
+  function nav(path, query, hash, forceReload) {
 
-    var reload =  !path;
+    var reload = forceReload || !path;
 
     path =  path  || location.pathname;
     query = query || (reload && location.search) || '';
@@ -78,7 +78,7 @@ module.exports = function(generator, $) {
       $layout.html(generator.renderLayout(newpage));
       $layout.attr('data-render-layout', layout);
       log('jqueryview updateLayout', path, query, hash);
-      generator.emit('update-view', path, query, hash, !reload);
+      generator.emit('update-view', path, query, hash, reload);
     }
 
     function updatePage() {
@@ -88,7 +88,7 @@ module.exports = function(generator, $) {
       $page.html(generator.renderPage(newpage));
       $page.attr('data-render-page', newpage._href);
       log('jqueryview updatePage:', path, query, hash)
-      generator.emit('update-view', path, query, hash, !reload);
+      generator.emit('update-view', path, query, hash, reload);
     }
 
     // return true if newpage layout is different from current layout
@@ -107,11 +107,11 @@ module.exports = function(generator, $) {
     if (!fragment) return generator.emit('notify', 'Oops, jqueryview cannot find fragment: ' + href);
 
     var $html = $('[data-render-html="' + href + '"]');
-    if (!$html) return generator.emit('notify', 'Oops, jqueryview cannot update html for fragment: ' + href);
+    if (!$html.length) return generator.emit('notify', 'Oops, jqueryview cannot update html for fragment: ' + href);
 
     $html.html(generator.renderHtml(fragment));
     log('jqueryview updateHtml', location.pathname, location.search, location.hash);
-    generator.emit('update-view', location.pathname, location.search, location.hash);
+    generator.emit('update-view', location.pathname, location.search, location.hash, false);
   }
 
 }
