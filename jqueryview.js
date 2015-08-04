@@ -21,6 +21,7 @@
 module.exports = function(generator, $) {
 
   var opts = generator.opts;
+  var lang = generator.handlebars.pageLang;
   var log = opts.log;
 
   // if there is no data-render-layout attribute, updateLayout will not be called
@@ -94,6 +95,7 @@ module.exports = function(generator, $) {
     // return true if newpage layout is different from current layout
     function layoutChanged(oldpage, newpage) {
       if (oldpage && oldpage.fixlayout) return true;
+      if (lang(oldpage) !== lang(newpage)) return true;
       var currentlayout = $layout.attr('data-render-layout') || 'main-layout';
       var newlayout = generator.layoutTemplate(newpage);
       return (newlayout !== currentlayout);
