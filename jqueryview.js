@@ -10,16 +10,14 @@
  * minimize html replacements by looking for attributes
  * data-render-layout
  * data-render-page
- * data-render-fragment
  * data-render-html
  *
- * NOTE: relPath support does not work in dynamic views, only used on output
- *       fixing this means modifying all relPaths on each level-changing nav
  *
 **/
 
-module.exports = function(generator, $) {
+module.exports = function(generator, window) {
 
+  var $ = window.$;
   var opts = generator.opts;
   var lang = generator.handlebars.pageLang;
   var log = opts.log;
@@ -79,7 +77,7 @@ module.exports = function(generator, $) {
       $layout.html(generator.renderLayout(newpage));
       $layout.attr('data-render-layout', layout);
       log('jqueryview updateLayout', path, query, hash);
-      generator.emit('update-view', path, query, hash, reload);
+      generator.emit('update-view', path, query, hash, window, $layout);
     }
 
     function updatePage() {
@@ -89,7 +87,7 @@ module.exports = function(generator, $) {
       $page.html(generator.renderPage(newpage));
       $page.attr('data-render-page', newpage._href);
       log('jqueryview updatePage:', path, query, hash)
-      generator.emit('update-view', path, query, hash, reload);
+      generator.emit('update-view', path, query, hash, window, $page);
     }
 
     // return true if newpage layout is different from current layout
@@ -103,7 +101,7 @@ module.exports = function(generator, $) {
 
   }
 
-  // this won't work if href changed
+  // this won't work if the href of a fragment is edited
   function updateHtml(href) {
     var fragment = generator.fragment$[href];
     if (!fragment) return generator.emit('notify', 'Oops, jqueryview cannot find fragment: ' + href);
@@ -113,7 +111,7 @@ module.exports = function(generator, $) {
 
     $html.html(generator.renderHtml(fragment));
     log('jqueryview updateHtml', location.pathname, location.search, location.hash);
-    generator.emit('update-view', location.pathname, location.search, location.hash, false);
+    generator.emit('update-view', location.pathname, location.search, location.hash, window, $html);
   }
 
 }

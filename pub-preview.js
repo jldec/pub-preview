@@ -22,7 +22,7 @@ $(function(){
   window.generator = generator;
 
   // bind jqueryview
-  var jqv = require('./jqueryview')(generator, $);
+  var jqv = require('./jqueryview')(generator, window);
   jqv.start();
 
   // navigate to page= parameter on startup
