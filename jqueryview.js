@@ -19,6 +19,7 @@ module.exports = function(generator, window) {
 
   var $ = window.$;
   var opts = generator.opts;
+  var u = generator.util;
   var lang = generator.handlebars.pageLang;
   var log = opts.log;
 
@@ -54,8 +55,11 @@ module.exports = function(generator, window) {
     hash =  hash  || (reload && location.hash)   || '';
 
     var newpage = generator.findPage(path);
-    if (!newpage) return generator.emit('notify', 'Oops, jqueryview cannot find page ' + path);
-    var oldpage = generator.findPage(location.pathname);
+    if (!newpage) return generator.emit('notify', 'Oops, jqueryview cannot find new page object ' + path);
+
+    var oldpath = u.unPrefix(location.pathname, opts.staticRoot);
+    var oldpage = generator.findPage(oldpath);
+    if (!oldpage) return generator.emit('notify', 'Oops, jqueryview cannot find current page object ' + oldpath);
 
     if (!reload && newpage === oldpage) return; // hash navigation doesn't require repaint
 

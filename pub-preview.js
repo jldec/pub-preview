@@ -14,6 +14,7 @@ $(function(){
 
   var generator = window.parent.generator;
   if (!generator) throw new Error('cannot bind preview to pub-generator');
+  var u = generator.util;
   var opts = generator.opts;
   var log = opts.log;
   var appUrl = opts.appUrl;
@@ -36,13 +37,10 @@ $(function(){
     var path = ctx.path;
 
     // strip origin from fq urls
-    if (path.slice(0, appUrl.length) === appUrl) {
-      path = path.slice(appUrl.length);
-    }
-    // on static server strip relPath root (see /server/client/init-opts.js)
-    else if (opts.staticHost && opts.relPath) {
-      path = path.replace(opts.relPath, '');
-    }
+    path = u.unPrefix(path, appUrl);
+
+    // strip static root (see /server/client/init-opts.js)
+    path = u.unPrefix(path, opts.staticRoot);
 
     // strip querystring
     path = path.split('?')[0];
