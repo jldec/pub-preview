@@ -1,10 +1,10 @@
 {
   "name": "pub-preview",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Browserify script for client-side navigation and pub-pkg-editor preview rendering (uses jQuery)",
   "main": "browser-script.js",
   "dependencies": {
-    "page": "^1.6.3"
+    "page": "^1.6.4"
   },
   "devDependencies": {},
   "repository": {
