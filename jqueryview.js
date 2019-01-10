@@ -2,7 +2,7 @@
  * jqueryview.js
  *
  * pub-generator plugin for jquery views
- * copyright 2015, Jurgen Leschner - github.com/jldec - MIT license
+ * copyright 2015-2019, Jurgen Leschner - github.com/jldec - MIT license
  *
  * listens for 'nav', 'loaded', and 'updatedText' events
  * emits 'update-view' when content has been replaced
