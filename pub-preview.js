@@ -30,6 +30,10 @@ $(function(){
   var startPage = window.parent.location.search ?
     require('querystring').parse(window.parent.location.search.slice(1)).page : '';
 
+  if (!startPage) {
+    startPage = u.unPrefix(u.unPrefix(window.parent.location.pathname, opts.staticRoot), opts.editorPrefix);
+  }
+
   // https://github.com/visionmedia/page.js
   window.pager = require('page');
 
