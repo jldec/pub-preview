@@ -114,8 +114,9 @@ module.exports = function(generator, window) {
     if (!$html.length) return generator.emit('notify', 'Oops, jqueryview cannot update html for fragment: ' + href);
 
     $html.html(generator.renderHtml(fragment));
-    log('jqueryview updateHtml', location.pathname, location.search, location.hash);
-    generator.emit('update-view', location.pathname, location.search, location.hash, window, $html);
+    var path = u.unPrefix(location.pathname, opts.staticRoot);
+    log('jqueryview updateHtml', path, location.search, location.hash);
+    generator.emit('update-view', path, location.search, location.hash, window, $html);
   }
 
 }
