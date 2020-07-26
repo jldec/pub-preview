@@ -34,12 +34,14 @@ module.exports = function(generator, window) {
   return view;
 
   function start() {
+    log('jqueryview start');
     generator.on('nav', nav);
     generator.on('loaded', nav); // full reload after structural edits
     generator.on('updatedText', updateHtml); // handle minor edits
   }
 
   function stop() {
+    log('jqueryview stop');
     generator.off('nav', nav);
     generator.off('loaded', nav);
     generator.off('updatedText', updateHtml);
@@ -47,6 +49,7 @@ module.exports = function(generator, window) {
 
   // navigate or reload by regenerating just the page or the whole layout
   function nav(path, query, hash, forceReload) {
+    log('jqueryview nav %s%s%s %s', path, query || '', hash || '', !!forceReload);
 
     var reload = forceReload || !path;
 
@@ -114,8 +117,9 @@ module.exports = function(generator, window) {
     if (!$html.length) return generator.emit('notify', 'Oops, jqueryview cannot update html for fragment: ' + href);
 
     $html.html(generator.renderHtml(fragment));
-    log('jqueryview updateHtml', location.pathname, location.search, location.hash);
-    generator.emit('update-view', location.pathname, location.search, location.hash, window, $html);
+    var path = u.unPrefix(location.pathname, opts.staticRoot);
+    log('jqueryview updateHtml', path, location.search, location.hash);
+    generator.emit('update-view', path, location.search, location.hash, window, $html);
   }
 
 }
