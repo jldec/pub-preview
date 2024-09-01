@@ -6,7 +6,7 @@
  * binds preview doc to generator via jqueryview
  *
  * NOTE: uses history push/pop-state, which doesn't work in older browers
- * Copyright (c) 2015-2022 Jürgen Leschner - github.com/jldec - MIT license
+ * Copyright (c) 2015-2024 Jürgen Leschner - github.com/jldec - MIT license
  *
 */
 
